@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Dúvidas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <h1>Formulário de Dúvidas</h1>
+
+        {% if sucesso %}
+            <div class="sucesso" id="msg-sucesso">
+                ✅ Sua dúvida foi enviada com sucesso!
+            </div>
+        {% endif %}
+
+        <form action="/enviar" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="username_discord">Username Discord:</label>
+            <input type="text" id="username_discord" name="username_discord" required placeholder="ex: seuUsuario#1234">
+
+            <label for="duvida">Sua dúvida:</label>
+            <textarea id="duvida" name="duvida" rows="4" required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        // Faz a mensagem desaparecer após 5 segundos
+        const msg = document.getElementById('msg-sucesso');
+        if (msg) {
+            setTimeout(() => {
+                msg.style.transition = "opacity 0.5s";
+                msg.style.opacity = "0";
+                setTimeout(() => msg.remove(), 500);
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
