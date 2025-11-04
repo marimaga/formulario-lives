@@ -13,8 +13,12 @@ SCOPES = [
 ]
 
 # Pega credenciais do Render
-service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+if os.environ.get("GOOGLE_CREDENTIALS"):
+    service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+    creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+else:
+    cred_path = r"C:\Users\maris\OneDrive\Documentos\Formulario vscode\formulario-duvidas-membros-14599bd38a4f.json"
+    creds = Credentials.from_service_account_file(cred_path, scopes=SCOPES)
 
 # Cliente gspread
 gc = gspread.authorize(creds)
@@ -30,14 +34,18 @@ def index():
 
 @app.route('/enviar', methods=['POST'])
 def enviar():
+    # Pegando os dados do formulário
+    nome = request.form.get('nome')
     username = request.form.get('username')
     duvida = request.form.get('duvida')
     
-    if username and duvida:
-        worksheet.append_row([username, duvida])
+    # Verificando se todos os campos foram preenchidos
+    if nome and username and duvida:
+        worksheet.append_row([nome, username, duvida])
         return redirect(url_for('index', sucesso=1))
     
     return redirect(url_for('index'))
+    
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000)) 
