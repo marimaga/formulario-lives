@@ -9,47 +9,41 @@
     <div class="container">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
 
-  {% if sucesso %}
-<div id="mensagem-sucesso" style="background-color: #d4edda; color: #155724; 
-    border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; 
-    font-weight: bold; display: inline-block;">
-    ✅ Mensagem enviada com sucesso!
-</div>
-<script>
-    setTimeout(function() {
-        var msg = document.getElementById('mensagem-sucesso');
-        if (msg) {
-            msg.style.display = 'none';
-        }
-    }, 3000);
-</script>
-{% endif %}
+        <!-- Título visível na página -->
+        <h2>Envie sua dúvida</h2>
 
+        <!-- Mensagem de sucesso -->
+        {% if sucesso %}
+        <div id="mensagem-sucesso" style="background-color: #d4edda; color: #155724; 
+            border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; 
+            font-weight: bold; display: inline-block;">
+            ✅ Mensagem enviada com sucesso!
+        </div>
+        <script>
+            setTimeout(function() {
+                var msg = document.getElementById('mensagem-sucesso');
+                if (msg) {
+                    msg.style.transition = "opacity 0.5s";
+                    msg.style.opacity = "0";
+                    setTimeout(() => msg.remove(), 500);
+                }
+            }, 3000);
+        </script>
+        {% endif %}
+
+        <!-- Formulário -->
         <form action="{{ url_for('enviar') }}" method="POST">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required>
+
             <label for="username">Username Discord:</label>
             <input type="text" id="username" name="username" required>
+
             <label for="duvida">Sua dúvida:</label>
             <textarea id="duvida" name="duvida" rows="4" required></textarea>
 
             <button type="submit">Enviar</button>
         </form>
     </div>
-</body>
-</html>
-
-
-    <script>
-        // Faz a mensagem desaparecer após 5 segundos
-        const msg = document.getElementById('msg-sucesso');
-        if (msg) {
-            setTimeout(() => {
-                msg.style.transition = "opacity 0.5s";
-                msg.style.opacity = "0";
-                setTimeout(() => msg.remove(), 500);
-            }, 5000);
-        }
-    </script>
 </body>
 </html>
