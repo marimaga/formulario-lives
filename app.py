@@ -7,7 +7,10 @@ from google.oauth2.service_account import Credentials
 app = Flask(__name__)
 
 # Escopos para Google Sheets
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+SCOPES = [
+  "https://www.googleapis.com/auth/spreadsheets",
+  "https://www.googleapis.com/auth/drive"
+]
 
 # Pega credenciais do Render
 service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
